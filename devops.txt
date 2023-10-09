@@ -1,0 +1,21 @@
+Q. what is devops 
+Q. what does devops do
+Q. is devops based on automation
+Q. what are the 4 steps of adopting devops
+Q. what is microservices
+Q. what these single purpose services paired with 
+Q. which problem microservices solves in adopting devops 
+Q. how do operations team handle increase frequency of development 
+Q. what 2 things CI/CD helps with
+Q. what are the 7 steps in a projects workflow 
+Q. what is an artifactt
+Q. what does CI does 
+Q. what problem does CI solves in projects workflow 
+Q. what problem does CD solves in projects workflow 
+Q. what is chocolatey 
+Q. what is sonar cloud
+Q. which aws services is used to give alerts when we cross our spending limit on AWS 
+Q. which aws services can be used to add SSL certificate to domain name 
+----------------------------------------------------------------------------
+
+Q. 

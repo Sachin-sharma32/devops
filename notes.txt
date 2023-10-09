@@ -1,0 +1,296 @@
+-> devops - combination of culture, practices and tools to deliver services at high velocity 
+->  in devops - dev and ops(responsible for deployment) are merged into single team 
+-> these teams uses practices to automate processes
+-> benefits - speed, rapid delivery, reliability, scale, collaboration, security(by automation)
+-> adopting devops 
+  * remove barrier between dev and ops teams (collaboration)
+  * perform very frequent but small updates
+  * microservices 
+    - decouple large system into independent projects
+    - each service serves a single purpose 
+    - each service is paired with small agile teams
+  * microservices and increase in frequency of release can lead of operations(deployment) challenges
+    - here CI/CD helps 
+      # automation practices like - IAC and configuration management
+      # monitoring and logging helps track performance and reduce risk 
+
+-> CI - detect issues at early stage
+  * developers write code
+  * push to github
+  * build server (jenkins) - build,tests,evaluate code and create software(artifact)
+  * artifact is an archive of files 
+  * this artifact is stored in software repo 
+  * artifacts are then deployed to server
+  * tests further tests this software on the server 
+  * after testing it is the pushed to production server 
+  * if developers worked for 3 weeks and get error from build server
+  * it is not possible to build code several time (1000s) in a day 
+  * the solution is to automate it  
+  * this is where CI helps -> developer -> github -> jenkins -> notification (failed/success) -> developer  (cycle continues)
+  * this whole process can be done any number of times developer wants
+
+-> CD 
+  * sometimes deploying artifacts to testing server can also fail due to server configuration defects 
+  * artifacts will be deployed many times during a day so we can automate it 
+  * Ansible - system automation 
+  * Terraform - cloud infrastructure automation 
+  * Jenkins - ci/cd automation 
+  * in CD deployment to test server, testing and deployment to production server is done automatically just like CI 
+
+-> chocolatey - tool to install software through command line
+-> chocolatey repository (install any software)
+
+choco install virtualbox --version=7.0.8 -y
+choco install vagrant --version=2.3.4 -y
+choco install maven -y
+choco install awscli -y 
+
+-> make account on sonarcloud 
+  * cloud based service with detects code issues 
+
+-> we can create a alarm every time we cross our set amount using AWS cloudwatch 
+
+-> buy a domain name and add a SSL certificate to that domain using AWS certificate manager
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-> before virtualization we used physical servers to isolate different services like database and web server and within web servers different services 
+-> with virtualization we can run multiple Guest OS on top of Host OS to run different services - saves cost 
+-> Snapshot - backup of virtual machine 
+-> Hypervisor - used to create VM 
+-> 2 types of Hypervisors
+  * Type 1
+    - runs as host OS (like windows)
+    - cannot do other things 
+    - used in production
+    - hardware -> hypervisors -> different Guest OS
+    - eg. Xen Hypervisor
+  * Type 2 
+    - runs on top of base OS 
+    - used for learnings
+    - hardware -> host OS -> hypervisor runnings as a software just like vscode
+    - eg. Oracle Virtualbox
+
+-> creating VMs
+  * manual - hypervisor, ISO file, putty (lecture 19)
+    - enable virtualization in windows 
+    - diable in windows features
+      # hyper-v
+      # windows hypervisor platform
+      # windows subsystem for linux 
+      # virtual machine platform 
+    - create 2 VM on "Oracle VM Virtualbox" (hypervisor) - ubuntu (server image), centos (almalinux image)
+      # these are are like creating machine 
+    - download iso files to add OS to these machines
+    - open terminal in centos/ubuntu -> $ ip addr show (show IP address of system)
+    - open git bash in windows (host OS) -> $ ssh sachin380@ip  (sachin380 -> ubuntu/centos user name)
+    - this way we can access any machine using terminal
+  * automated - hypervisor, Vagrant file, vagrant commands 
+    - vagrant - manages VMs automatically
+    - problem with manual VM management 
+      # installation 
+      # human error 
+      # tough to replicate
+    - vagrant 
+      # No OS installation 
+      # Vagrantfile (automatically manage VMs)
+      # simple commands 
+    - setup 
+      # mkdir vagrant-vms 
+      # cd vagrant-vms 
+      # mkdir centos 
+      # mkdir ubuntu 
+      # go to vagrant cloud -> search for centos -> copy it's name 
+      # cd centos 
+      # vagrant init {paste the name}  (a VagrantFile will be created)
+      # cat VagrantFile (see the content)
+      # vagrant up (run the VM)
+      # vagrant box list (list of boxes (like ISO files) downloaded)
+      # vagrant status (check if VM is running)
+      # open oracle vm virtualbox, a new VM would be present there
+      # vagrant ssh (access VM from git bash)
+      # vagrant halt (power off VM )
+      # vagrant destroy (delete the VM)
+      # do the same for Ubuntu
+      # vagrant global-status (see status of all VMs)
+
+-> open source - source code that anyone can inspect and modify 
+-> Linux kernel + software = linux OS
+-> everything in linux is a file (including hardware like mouse)
+-> why linux 
+  * open source 
+  * most servers runs on linux 
+  * automation 
+  * security
+-> hardware -> kernel -> shell -> applications
+-> 2 most popular linux distributions families -> RPM based (RHEL), Debian based (Ubuntu)
+-> RPM - packages end with .rpm, Debian - .deb
+-> important directories
+  # home directory
+    - /root (for root user)
+    - /home/username (normal user)
+  # commands directory
+    - normal user -> /bin, /usr/bin, /usr/local/bin
+    - root user -> /sbin, /usr/sbin, /usr/local/sbin
+  # devices mountpoints
+    - /media or /mnt
+  # configuration (for network, user, server etc.)
+    - /etc
+  # temporary files (deleted on re-boot)
+    - /tmp
+  # kernel and bootloader data
+    - /boot
+  # server data (when running a web server, all website files like html will be stored here)
+    - /var or /srv
+  # info about system
+    - /proc, /sys
+  # application's data
+    - /lib, /usr/lib, /usr/local/lib
+
+-> enter the VM (centos)
+  $ whoami
+  $ pwd
+  $ ls
+  $ cat 
+  $ sudo -i (switch to root user)
+  # cd / (root directory - all the files on this machine)
+  # cd ~ (home directory of user)
+  # mkdir
+  # touch file{1...10}.txt
+  # cp {filename} destination/
+  # cp -r {directory} destination/ 
+  # cp --help
+  # mv file destination/
+  # mv filename1 filename2 (rename)
+  # mv *.txt destination/
+  # rm filename
+  # rm -r foldername
+  # rm -r *  (remove everything)
+  # history
+  # sudo yum install vim -y
+  # file filename (type of file)
+  # mkdir -p /folder1/folder2
+  # ln -s originalfile linkfile  (create soft link)
+  # grep {text to find} {filename}
+  # grep {text} *  (find in all files)
+  # grep -R {text} {filename}  (-R -> search at any nesting level)
+  # sed -i 's/sachin/sharma/g' *.txt  (replace in multiple files)
+  # head/tail {filename}
+  # echo "hello" > {filename}  (replace/create content in file) 
+  # echo "hello world" >> {filename} (append)
+  # free -m (memory utilization)
+  # yum install vim -y > /dev/null  (in this file nothing will be stored, used to clear screen from install output on screen)
+  # wc -l  (count number of lines in file)
+  # ls | wc -l  (number of files)
+  # find {foldername} -name host*  (find file)
+  # /etc/passwd -> root:x:0:0:root:/root:/bin/bash
+    * root -> user name
+    * x -> link to file which holds encrypted password
+    * 0 -> user ID
+    * 0 -> group ID
+    * root -> any comment
+    * /root -> home directory of user
+    * /bin/bash -> shell
+  # 3 types of users 
+    * root
+    * normal
+    * applications
+  # useradd sachin (add user)
+  # groupadd devops (add group)
+  # /etc/group  (all groups)
+  # usermod -aG {groupname} {username}  (add user to group)
+  # passwd {username}  (create/update password of user)
+  # if user forgets the password then root user can reset it  
+  # su - sachin  (switch to user "sachin", only root user can do without password)
+  # last  (who all logged in to this system)
+  # lsof -u {username}  (which files user opened)
+  # userdel -r {username}  (delete user and it's home directory (-r))
+  # groupdel {groupname}
+  # id vagrant (info about user)
+  # -rw-------  -> "-" (file, "d" - directory, "b" - block file (storage), "l" - links (shortcuts)), rw (permission, rwx -> user,user's group,others)
+    * "execute" means can "cd" into the directory or open the file
+    * "read" means can "ls"
+    * "write" - make changes
+  # chown -R username:groupname {folder} (change group and user of folder, -R -> for all the files deeply nested within)
+  # chmod o-x {folder/file}  (for others "o" remove "-" executable "x")
+  # chmod 640 {folder/file}  (6 -> user (4 - read, 2 write, 1 execute), 4 -> group, 0 -> others)
+  # only vagrant user (one created during linux installation) can run commands as root user "sudo"
+    * sudo yum install {package}
+    * vagrant user can do - sudo useradd sachin
+    * to give permission to any user/group to act as root user 
+      - cd /etc/sudoers.d/
+      - touch sachin 
+      - vim sachin 
+      - sachin All=(All) NOPASSWD: ALL   (NOPASSWD - don't ask for user password when using sudo)
+      - touch devops 
+      - %devops All=(All) NOPASSWD: All  (%devops - all users in devops group)
+  
+$ curl {package's like -> right click -> copy link} -o filename (-o -> send the output to this file)
+  * just like when we download package in windows
+  * rpm -ivh {filename}  (install package, i - install, v - verbose, h - human readable format)
+  * tree (see files/folders in tree structure)
+  * but these steps were very manual and if some package need some dependencies to be installed first then it will a big issue
+  * instead we can use "yum" (centos package manager)
+  $ yum search httpd  (search packages repo)
+  $ yum remove {package}
+  $ yum history
+
+$ systemctl status httpd  (systemctl - run services/applications, httpd - application to run servers)
+$ systemctl start httpd (start a service)
+$ systemctl stop httpd
+$ systemctl restart httpd
+$ sudo reboot (reboot VM)
+$ systemctl enable httpd (start the service at boot time)
+
+$ top (like task manager)
+$ kill {PID}   (stop a process)
+
+-> archive is used to keep backup of current data in compressed form
+$ tar -czvf  filename.tar.gz {filename you want to archive}   (c -> create, z -> compress, v -> verbose, f -> file, .tar -> tarball file,  .gz -> gunzip (compressed))
+$ tar -xzvf filename.tar.gz  (x -> extract/unarchive)
+
+-> most commands in ubuntu is same as centos except few
+-> instead of "useradd" we have "adduser" command to add new user
+-> installing package manually in ubuntu
+  $ wget {binary package url of package}
+  $ dpkg -i {filename of installed package}
+  $ dpkg -l  (search all installed packages)
+  $ dpkg -r {packagename}  (remove package)
+-> automatic installation
+  $ apt search {packagename}
+  $ apt install {packagename}
+  $ apt upgrade (upgrade all packages)
+  $ apt purge {packagename}  (remove package completely)
+
+----------------------------------------------------------------------------
+
+-> sync directories
+  * C:/vagrant-vms/ubuntu in the host OS is in sync with /vagrant folder of VM
+  * if we make changes (create/delete files) in either folder then it will be reflected in the other
+  * to make more sync directories 
+    - config.vm.synced_folder (in VagrantFile)
+    - to apply the changes to running VM -> $ vagrant reload
+-> read the VagrantFile in vagrant-vms/ubuntu
+-> Provisioning - run some commands as soon as the VM is created/booted
+  * config.vm.provision  (in VagrantFile)
+-> to force provisioning on running VM 
+  $ vagrant reload --provision
+
+-> deploying html template on linux server
+  * create a VM with vagrant 
+  * config.vm.network "private_network" (VagrantFile) - to give host machine access to machine using special IP
+  * config.vm.network "public_network" (VagranFile) - this creates bridged network (create virtual connection between host OS and guest OS so that they can communicate and guest OS can connect to other networks which the host OS is connected to)
+  $ yum install httpd (used to make server using centos)
+  $ yum install wget (to install html template)
+  $ systemctl start httpd
+  $ systemctl enable httpd
+  $ ip addr show -> copy the ip address of server and paste in browser (http://{ip})
+  * a default httpd webpage will appear
+  * now add html file inside /var/www/html and restart httpd
+
+-> 
+
+
+
+  
+
